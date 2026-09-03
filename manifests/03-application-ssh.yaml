@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: s11gabriel-app
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  # Use our custom project — NOT the default project.
+  project: s11gabriel-project
+
+  source:
+    repoURL: ssh://git@git.example.com/ORG/REPO.git
+    targetRevision: main
+    path: path/to/kubernetes/manifests
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: s11gabriel
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=false

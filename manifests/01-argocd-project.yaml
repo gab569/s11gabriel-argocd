@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: s11gabriel-project
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: Custom Argo CD project for s11gabriel applications
+
+  # Explicitly allow only the repository URLs this project needs.
+  # Replace these examples with your real Git repository URL(s).
+  sourceRepos:
+    - https://git.example.com/ORG/REPO.git
+    - ssh://git@git.example.com/ORG/REPO.git
+
+  # Allow this project to deploy only to the specified namespace
+  # in the cluster where Argo CD is running.
+  destinations:
+    - namespace: s11gabriel
+      server: https://kubernetes.default.svc
+
+  # Allow normal namespace-scoped resources.
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'
+
+  # No cluster-scoped resources are allowed by this example.
+  # Add only the specific cluster resources your application actually needs.
+  clusterResourceWhitelist: []

@@ -1,0 +1,17 @@
+# TEMPLATE ONLY — do not commit this file after inserting real credentials.
+apiVersion: v1
+kind: Secret
+metadata:
+  name: s11gabriel-repo-token
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+type: Opaque
+stringData:
+  type: git
+  name: s11gabriel-repo-token
+  project: s11gabriel-project
+  url: https://git.example.com/ORG/REPO.git
+  username: YOUR_GIT_USERNAME
+  # For HTTPS + PAT authentication Argo CD uses the token as the password.
+  password: YOUR_PERSONAL_ACCESS_TOKEN
