@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: nginx-deployment
+  namespace: s11gabriel
+
+  annotations:
+    secret.reloader.stakater.com/reload: "s11gabriel-app-secret"
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: nginx
+
+  template:
+    metadata:
+      labels:
+        app: nginx
+
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27
+          ports:
+            - containerPort: 80
+
+          env:
+            - name: APP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: s11gabriel-app-secret
+                  key: fdfd
